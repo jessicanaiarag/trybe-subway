@@ -6,9 +6,23 @@
 // 6.Retornar lanches e preço dos combos
 const data = require('../data');
 
-function getSandwichPrice(sandwichName) {
+function sumItemsPrice(itemIdsOrNames) {
+  let preço = 0;
+  itemIdsOrNames.forEach((ingredient) => {
+    const currIngredient = data.menu.sandwichItems
+    .find((item) => item.id === ingredient || item.name === ingredient);
+    if (!currIngredient) throw new Error('Pedido inválido');
+    preço += currIngredient.price;
+  });
+  return preço;
+};
 
-}
+function getSandwichPrice(sandwichName) {
+  const foundSandwich = data.premade.sandwichs
+  .find((sandwich) => sandwich.name === sandwichName);
+  if (!foundSandwich) throw new Error('Sanduíche não encontrado');
+  return sumItemsPrice(foundSandwich.ingredients);
+};
 
 function getDayMenu(day) {
 
@@ -19,7 +33,7 @@ function getSharedBill(ordersIDs, qtd) {
 }
 
 function makeSandwich(items) {
-
+  return sumItemsPrice(items);
 }
 
 function getCheapestPizza(price) {
