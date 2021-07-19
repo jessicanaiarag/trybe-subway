@@ -25,7 +25,15 @@ function getSandwichPrice(sandwichName) {
 };
 
 function getDayMenu(day) {
-
+  const isSaleDay = data.saleDays.find((currDay) => currDay === day);
+  if (isSaleDay) {
+    const discontePizzas = data.menu.pizzas.map((pizza) => {
+      pizza.price = pizza.price * 0.9;
+      return pizza;
+    })
+    return {... data.menu, pizza: discontePizzas};
+  }
+  return data.menu;
 }
 
 function getSharedBill(ordersIDs, qtd) {
