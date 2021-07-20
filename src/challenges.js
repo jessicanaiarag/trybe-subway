@@ -37,15 +37,30 @@ function getDayMenu(day) {
 }
 
 function getSharedBill(ordersIDs, qtd) {
+  const productCategories = ['pizzas', 'drinks'];
 
-}
+  const total = ordersIDs.reduce((acc, order) => {
+
+    productCategories.forEach((category) => {
+      const foundProduct = data.menu[category].find((curr) => curr.id === orders.id)
+      if (foundProduct) {
+        acc += foundProduct.price * order.qtd;
+      }
+      return acc;
+    }); 
+  }), 0
+    
+  
+};
 
 function makeSandwich(items) {
   return sumItemsPrice(items);
 }
 
 function getCheapestPizza(price) {
-
+  const { pizzas } = data.menu;
+  const cheapestPizzas = pizzas.filter((pizza) => price >= pizza.price);
+  return cheapestPizzas;
 }
 
 function getComboSandwichsAndPrices() {
